@@ -60,13 +60,17 @@ if (panier == null || panier == 0) {
           changeQuantity[j].addEventListener("change", (event) => {
             event.preventDefault();
             const parent = event.target.closest("[data-id]");
-            const oldQtt = panier.find((f) => f.idProduct == parent.dataset.id && f.colorProduct == parent.dataset.color);
+            const oldQtt = panier.find(
+              (f) =>
+                f.idProduct == parent.dataset.id &&
+                f.colorProduct == parent.dataset.color
+            );
             console.log(oldQtt);
             const newQuantity = changeQuantity[j].valueAsNumber;
             console.log(newQuantity);
-            oldQtt.quantityProduct = newQuantity;   
-            localStorage.setItem("panier", JSON.stringify(panier)); 
-            location.reload()    
+            oldQtt.quantityProduct = newQuantity;
+            localStorage.setItem("panier", JSON.stringify(panier));
+            location.reload();
           });
         }
         // --------------------------BOUTON SUPPRIMER---------------------------------------------
@@ -76,8 +80,12 @@ if (panier == null || panier == 0) {
           deleteItem[btn].addEventListener("click", (event) => {
             event.preventDefault();
             const parent = event.target.closest("[data-id]");
-            
-            panier = panier.filter((p) => p.idProduct !== parent.dataset.id || p.colorProduct !== parent.dataset.color);
+
+            panier = panier.filter(
+              (p) =>
+                p.idProduct !== parent.dataset.id ||
+                p.colorProduct !== parent.dataset.color
+            );
             // panier = panier.filter((p) => console.log(p.colorProduct , parent.dataset.color))
             localStorage.setItem("panier", JSON.stringify(panier));
             // location.reload();
@@ -85,36 +93,58 @@ if (panier == null || panier == 0) {
         }
 
         // -------------------------------------FORMULAIRE----------------------------------------
-        const form = document.getElementsByClassName('cart__order__form')
-        console.log(form);
+        const form = document.querySelector(".cart__order__form");
+        
+        // Mise en place des regex
+        let preNomRegexp = new RegExp("^[a-zA-Z0-9,-.àâéèêùû' ]{2,25}$");
+        let addressRegexp = new RegExp("^[a-zA-Z0-9,-.àâéèêùû' ]{3,}$");
+        let cityRegexp = new RegExp("^[a-zA-Z0-9,-.àâéèêùû']{3,50}$");
+        let emailRegexp = new RegExp("^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-zA-Z]{2,10}$", "g");
 
-        // Ecoute value prénom
-        document.getElementById('firstName').addEventListener('change', (event) => {
-          event.preventDefault()
-          console.log('prenom');
-        })
-       
-
-        // Ecoute value nom
-        document.getElementById('lastName').addEventListener('change', (event) => {
-          event.preventDefault()
-          console.log('nom');
-        })
-        // Ecoute value adresse
-        document.getElementById('address').addEventListener('change', (event) => {
-          event.preventDefault()
-          console.log('adresse');
-        })
-        // Ecoute value ville
-        document.getElementById('city').addEventListener('change', (event) => {
-          event.preventDefault()
-          console.log('ville');
-        })
-        // Ecoute value email  
-        document.getElementById('email').addEventListener('change', (event) => {
-          event.preventDefault()
-          console.log('email');
-        })
+        // // Ecoute value prénom
+        form.firstName.addEventListener("change", function() {
+          let message = form.firstName.nextElementSibling;
+          if(preNomRegexp.test(form.firstName.value)) {
+            message.innerHTML = 'Prénom valide' 
+          } else {
+            message.innerHTML = 'Prénom non valide'
+          }
+        });
+        form.lastName.addEventListener("change", function() {
+          let message = form.lastName.nextElementSibling;
+          if(preNomRegexp.test(form.lastName.value)) {
+            message.innerHTML = 'Nom valide'
+          } else {
+            message.innerHTML = 'Nom non valide'
+          }
+         
+        });
+        form.address.addEventListener("change", function() {
+          let message = form.address.nextElementSibling;
+          if(addressRegexp.test(form.address.value)) {
+            message.innerHTML = "Adresse valide"
+          } else {
+            message.innerHTML = "Adresse non valide"
+          }
+          
+        });
+        form.city.addEventListener("change", function() {
+          let message = form.city.nextElementSibling;
+          if(cityRegexp.test(form.city.value)) {
+            message.innerHTML = 'Ville valide'
+          } else {
+            message.innerHTML = 'Ville non valide'
+          }
+         
+        });
+        form.email.addEventListener("change", function() {
+          let message = form.email.nextElementSibling;
+          if(emailRegexp.test(form.email.value)) {
+            message.innerHTML = 'Email valide' 
+          } else {
+            message.innerHTML = 'Email non valide'
+          }
+        });
       });
   });
 }
