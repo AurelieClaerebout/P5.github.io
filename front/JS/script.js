@@ -1,6 +1,7 @@
 fetch("http://localhost:3000/api/products")
 .then((kanap) => kanap.json())
 .then((kanap) => {
+  console.log(kanap);
 kanap.forEach(element => {
     const index =
     `
@@ -12,7 +13,7 @@ kanap.forEach(element => {
     </article>
     </a>
     `
-    const items = document.getElementById('items')
-    items.insertAdjacentHTML("afterbegin",index)
+    const items = document.getElementById('items');
+    items.insertAdjacentHTML("afterbegin",index);
 });
 });

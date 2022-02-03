@@ -1,12 +1,11 @@
 // ------------------------------------------Récupération id produit--------------------------------------
 console.log(window.location.search);
 const id = window.location.search.split("=")[1];
-console.log(id);
+
 
 fetch(`http://localhost:3000/api/products/${id}`)
   .then((kanap) => kanap.json())
   .then((kanap) => {
-    console.log(kanap);
     // ----------------------------------------Ajouter le titre de la page---------------------------------
     document.querySelector("title").innerHTML = `${kanap.name}`;
 
@@ -19,10 +18,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
       );
 
     // ---------------------------------------- Ajouter le nom de l'article--------------------------------
-    // document
-    //   .getElementById("title")
-    //   .insertAdjacentHTML("afterbegin", `${kanap.name}`);
-    title.insertAdjacentHTML('afterbegin', `${kanap.name}`)
+    document
+      .getElementById("title")
+      .insertAdjacentHTML("afterbegin", `${kanap.name}`);
 
     // --------------------------------------Ajouter le titre de l'article---------------------------------
     document
@@ -47,14 +45,12 @@ fetch(`http://localhost:3000/api/products/${id}`)
       // --------------------------Fonction des éléments a envoyer dans le localStorage
       const quantityValue = parseInt(document.getElementById("quantity").value);
       const colorValue = document.getElementById("colors").value;
-
       const infoProduct = {
         idProduct: id,
         colorProduct: colorValue,
         quantityProduct: quantityValue,
       };
-      console.log(infoProduct);
-
+      
       if (colorValue === "" || quantityValue === 0) {
         alert("Veuillez renseigner les champs");
       } else {
