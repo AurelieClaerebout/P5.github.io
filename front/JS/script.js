@@ -15,5 +15,6 @@ kanap.forEach(element => {
     `
     const items = document.getElementById('items');
     items.insertAdjacentHTML("afterbegin",index);
+  });
 });
-});
+

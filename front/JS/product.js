@@ -2,7 +2,6 @@
 console.log(window.location.search);
 const id = window.location.search.split("=")[1];
 
-
 fetch(`http://localhost:3000/api/products/${id}`)
   .then((kanap) => kanap.json())
   .then((kanap) => {
@@ -33,9 +32,14 @@ fetch(`http://localhost:3000/api/products/${id}`)
       .insertAdjacentHTML("afterbegin", `${kanap.description}`);
 
     // -----------------------------------------Ajouter les couleurs de l'article--------------------------
-    
+
     kanap.colors.forEach((color) => {
-      document.getElementById("colors").insertAdjacentHTML("afterbegin", `<option value="${color}">${color}</option>`);
+      document
+        .getElementById("colors")
+        .insertAdjacentHTML(
+          "afterbegin",
+          `<option value="${color}">${color}</option>`
+        );
     });
 
     // --------------------------------Ecoute du bouton ajouter au panier-----------------------------------
@@ -50,11 +54,11 @@ fetch(`http://localhost:3000/api/products/${id}`)
         colorProduct: colorValue,
         quantityProduct: quantityValue,
       };
-      
+
       if (colorValue === "" || quantityValue === 0) {
         alert("Veuillez renseigner les champs");
       } else {
-        let panier =
+        const panier =
           localStorage.getItem("panier") != null
             ? JSON.parse(localStorage.getItem("panier"))
             : null;
@@ -70,7 +74,6 @@ fetch(`http://localhost:3000/api/products/${id}`)
           );
           if (checkPanier) {
             checkPanier.quantityProduct += infoProduct.quantityProduct;
-            console.log(checkPanier.quantityProduct);
             localStorage.setItem("panier", JSON.stringify(panier));
           } else {
             panier.push(infoProduct);
